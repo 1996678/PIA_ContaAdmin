@@ -1,0 +1,731 @@
+#CASO 6-7 PRESUPUESTO MAESTRO (BASADO EN EL CASO 6-7 TOMANDO EN CUENTA SUS ESPECÍFICACIONES)
+#LA EMPRESA PUEDE TENER 3 PRODUCTOS Y SERÁ DE FORMA SEMESTRAL
+print('1. Cédula de presupuesto de ventas del año 2023')
+producto1=input('Ingrese el nombre del producto 1: ') #D
+producto2=input('Ingrese el nombre del producto 2: ') #DI
+producto3=input('Ingrese el nombre del producto 3: ') #Z
+
+print('----Primer semestre---- ')
+P1_unidades_sem1 = int(input(f'Ingrese las unidades a vender de {producto1}: ')) #10000
+P1_precio_sem1 = int(input(f'Ingrese el precio de venta de {producto1}: ')) #200
+
+P2_unidades_sem1 = int(input(f'Ingrese las unidades a vender de {producto2}: ')) #6000
+P2_precio_sem1 = int(input(f'Ingrese el precio de venta de {producto2}: ')) #100
+
+P3_unidades_sem1 = int(input(f'Ingrese las unidades a vender de {producto3}: ')) #5000
+P3_precio_sem1 = int(input(f'Ingrese el precio de venta de {producto3}: ')) #150
+
+print('----Segundo semestre---- ')
+P1_unidades_sem2 = int(input(f'Ingrese las unidades a vender de {producto1}: ')) #5000
+P1_precio_sem2 = int(input(f'Ingrese el precio de venta de {producto1}: ')) #220
+
+P2_unidades_sem2 = int(input(f'Ingrese las unidades a vender de {producto2}: ')) #4000
+P2_precio_sem2 = int(input(f'Ingrese el precio de venta de {producto2}: ')) #120
+
+P3_unidades_sem2 = int(input(f'Ingrese las unidades a vender de {producto3}: ')) #5000
+P3_precio_sem2 = int(input(f'Ingrese el precio de venta de {producto3}: ')) #150
+
+productos = {
+    producto1: {"unidades": [P1_unidades_sem1, P1_unidades_sem2],"precio_venta": [P1_precio_sem1, P1_precio_sem2]},
+    producto2: {"unidades": [P2_unidades_sem1, P2_unidades_sem2], "precio_venta": [P2_precio_sem1, P2_precio_sem2]},
+    producto3: {"unidades": [P3_unidades_sem1, P3_unidades_sem2], "precio_venta": [P3_precio_sem1, P3_precio_sem2]}
+}
+
+print(f"\n--------- 1. PRESUPUESTO DE VENTAS ----------")
+print("{:<25} {:<20} {:<20} {:<12}".format("", "1er. Semestre", "2do. Semestre", "Total"))
+
+for producto, datos in productos.items():
+    unidades_sem1=datos["unidades"][0]
+    precio_sem1=datos["precio_venta"][0]
+    importe_sem1=unidades_sem1 * precio_sem1
+    
+    unidades_sem2=datos["unidades"][1]
+    precio_sem2=datos["precio_venta"][1]
+    importe_sem2=unidades_sem2 * precio_sem2
+    
+    total_por_producto= importe_sem1 + importe_sem2
+    
+    print("{:<25} {:<20} {:<20} {:<12}".format(producto, "", "", ""))
+    print("{:<25} {:<20} {:<20} {:<12}".format("Unidades a vender", unidades_sem1, unidades_sem2, ""))
+    print("{:<25} {:<20} {:<20} {:<12}".format("Precio de Venta", f"${precio_sem1:,}", f"${precio_sem2:,}", ""))
+    print("{:<25} {:<20} {:<20} {:<12} {:<12}".format("Importe de Venta", f"${importe_sem1:,}", f"${importe_sem2:,}", f"${total_por_producto:,}", ""))
+    print("\n")
+    
+# Calcular y mostrar el Total de Ventas por Semestre
+total_ventas_1er_semestre = sum(datos["unidades"][0] * datos["precio_venta"][0] for datos in productos.values())
+total_ventas_2do_semestre = sum(datos["unidades"][1] * datos["precio_venta"][1] for datos in productos.values())
+
+total_ventas2023= total_ventas_1er_semestre + total_ventas_2do_semestre 
+
+print("{:<25} {:<20} {:<20} {:<12} {:<12}".format("Total Ventas por Semestre", f"${total_ventas_1er_semestre:,}", f"${total_ventas_2do_semestre:,}", f"${total_ventas2023:,}",  ""))
+
+##############################################
+print(f'\n2. Determinación del saldo de Clientes y Flujo de Entradas')
+saldo_clientes2022=int(input('Ingrese el saldo de los clientes en 2022: ')) #50000
+ventas2023=total_ventas2023
+
+total_clientes2023=saldo_clientes2022 + ventas2023
+
+print(f"\n--------- 2. PETERMINACIÓN DEL SALDO DE CLIENTES Y FLUJO DE ENTRADAS ----------")
+print("{:<30} {:<20} {:<21} {:<12}".format("Descripción", "Importe", "Total", ""))
+print("{:<30} {:<21} {:<20} {:<12}".format(f"\nSaldo clientes 31-Dic-2022", "" , f"${saldo_clientes2022:,}", ""))
+print("{:<30} {:<20} {:<20} {:<12}".format("Ventas 2023", "" , f"${ventas2023:,}", ""))
+print("{:<30} {:<20} {:<20} {:<12}".format("Total Clientes 2023", "" , f"${total_clientes2023:,}", ""))
+
+print("{:<30} {:<20} {:<20} {:<12}".format(f"\nEntradas de efectivo:", "" , "", ""))
+print("{:<30} {:<20} {:<20} {:<12}".format("Por cobranza del 2022: ", f"${saldo_clientes2022:,}", "" ,""))
+print("{:<30} {:<20} {:<20} {:<12}".format("Por cobranza del 2023: ", f"${ventas2023*0.9:,}", "" ,"")) #se multiplicó como el ejemplo 7
+print("{:<30} {:<20} {:<20} {:<12}".format("Total de entradas 2023", "" , f"${saldo_clientes2022 + (ventas2023*0.9):,}", ""))
+
+print("{:<30} {:<21} {:<20} {:<12}".format(f"\nSaldo de clientes 2023:", "" , f"${(total_clientes2023) - ((saldo_clientes2022 + (ventas2023*0.9))):,}", ""))
+
+###############################################CEDULA 3
+print(f'\n3. Presupuesto de Producción')
+print(f'Se considera que los inventarios iniciales son iguales al final del primer semestre')
+
+# Primer semestre
+print('---Primer semestre---')
+P1_invfinal_sem1 = int(input(f'Ingrese el inventario inicial del {producto1}: ')) #10000
+P2_invfinal_sem1 = int(input(f'Ingrese el inventario inicial del {producto2}: ')) #5000
+P3_invfinal_sem1 = int(input(f'Ingrese el inventario inicial del {producto3}: ')) #5000
+
+P1_invinicial_sem1 = P1_invfinal_sem1
+P2_invinicial_sem1 = P2_invfinal_sem1
+P3_invinicial_sem1 = P3_invfinal_sem1
+
+# Segundo semestre
+print('---Segundo semestre---')
+P1_invfinal_sem2 = int(input(f'Ingrese el inventario final del {producto1}: ')) #7000
+P2_invfinal_sem2 = int(input(f'Ingrese el inventario final del {producto2}: ')) #3000
+P3_invfinal_sem2 = int(input(f'Ingrese el inventario final del {producto3}: ')) #2000
+
+invfinal_productoterminado=[P1_invfinal_sem2,P2_invfinal_sem2,P3_invfinal_sem2]
+
+P1_invinicial_sem2 = P1_invfinal_sem1
+P2_invinicial_sem2 = P2_invfinal_sem1
+P3_invinicial_sem2 = P3_invfinal_sem1
+
+inventario_productos = {
+    producto1: {"unidades": [P1_unidades_sem1, P1_unidades_sem2],"inventario final": [P1_invfinal_sem1, P1_invfinal_sem2],"inventario inicial": [P1_invinicial_sem1, P1_invinicial_sem2]},
+    producto2: {"unidades": [P2_unidades_sem1, P2_unidades_sem2],"inventario final": [P2_invfinal_sem1, P2_invfinal_sem2], "inventario inicial": [P2_invinicial_sem1, P2_invinicial_sem2]},
+    producto3: {"unidades": [P3_unidades_sem1, P3_unidades_sem2],"inventario final": [P3_invfinal_sem1, P3_invfinal_sem2], "inventario inicial": [P3_invinicial_sem1, P3_invinicial_sem2]}
+}
+
+print(f"\n--------- 3. PRESUPUESTO DE PRODUCCIÓN ----------")
+print("{:<25} {:<20} {:<20} {:<12}".format("", "1er. Semestre", "2do. Semestre", "Total 2023"))
+# Crear listas para almacenar las unidades a producir de cada semestre
+unidades_a_producir_sem1_list = []
+unidades_a_producir_sem2_list = []
+
+for producto, datos in inventario_productos.items():
+    unidades_sem1 = datos["unidades"][0]
+    unidades_sem2 = datos["unidades"][1]
+    
+    inventario_final_sem1 = datos["inventario final"][0]
+    inventario_inicial_sem1 = datos["inventario inicial"][0]
+    
+    inventario_final_sem2 = datos["inventario final"][1]
+    inventario_inicial_sem2 = datos["inventario inicial"][1]
+    
+
+    total_unidades_sem1 = unidades_sem1 + inventario_final_sem1
+    total_unidades_sem2 = unidades_sem2 + inventario_final_sem2
+
+    unidades_a_producir_sem1 = total_unidades_sem1 - inventario_inicial_sem1
+    unidades_a_producir_sem2 = total_unidades_sem2 - inventario_inicial_sem2
+
+    # Agregar los valores a las listas
+    unidades_a_producir_sem1_list.append(unidades_a_producir_sem1)
+    unidades_a_producir_sem2_list.append(unidades_a_producir_sem2)
+
+    print("{:<30} {:<20} {:<20} {:<12}".format(producto, "", "", ""))
+    print("{:<30} {:<20} {:<20} {:<12}".format("Unidades a vender", f"{unidades_sem1:,}", f"{unidades_sem2:,}", f"{unidades_sem1 + unidades_sem2:,}"))
+    print("{:<30} {:<20} {:<20} {:<12}".format("(+) Inventario final", f"{inventario_final_sem1:,}", f"{inventario_final_sem2:,}", f"{(inventario_final_sem2):,}" ))
+    print("{:<30} {:<20} {:<20} {:<12}".format("(=) Total unidades", f"{total_unidades_sem1:,}", f"{total_unidades_sem2:,}", f"{(unidades_sem1 + unidades_sem2) + (inventario_final_sem2):,}", ""))
+    print("{:<30} {:<20} {:<20} {:<12}".format("(-) Inventario inicial", f"{inventario_inicial_sem1:,}", f"{inventario_inicial_sem2:,}", f"{inventario_inicial_sem2:,}" ))
+    print("{:<30} {:<20} {:<20} {:<12}".format("(=) Unidades a producir", f"{unidades_a_producir_sem1:,}", f"{unidades_a_producir_sem2:,}", f"{((unidades_sem1 + unidades_sem2) + (inventario_final_sem2)) - (inventario_inicial_sem2):,}", ""))
+    print("\n")
+
+
+################### CÉDULA 4
+print("\n4. Presupuesto de Requerimiento de Materiales")
+# Sumar las unidades a producir para obtener el total
+unidades_a_producir = [a + b for a, b in zip(unidades_a_producir_sem1_list, unidades_a_producir_sem2_list)]
+
+# Solicitar la información de los materiales
+material1 = input('Ingrese el nombre del material 1: ') #A
+material2 = input('Ingrese el nombre del material 2: ') #B
+material3 = input('Ingrese el nombre del material 3: ') #C
+
+# Solicitar el requerimiento de materiales para el primer semestre
+M1_requerimiento_P1 = int(input(f'Ingrese el requerimiento del {material1} para el producto 1: ')) #15
+M2_requerimiento_P1 = int(input(f'Ingrese el requerimiento del {material2} para el producto 1: ')) #6
+M3_requerimiento_P1 = int(input(f'Ingrese el requerimiento del {material3} para el producto 1: ')) #9
+
+M1_requerimiento_P2 = int(input(f'Ingrese el requerimiento del {material1} para el producto 2: ')) #13
+M2_requerimiento_P2 = int(input(f'Ingrese el requerimiento del {material2} para el producto 2: ')) #7
+M3_requerimiento_P2 = int(input(f'Ingrese el requerimiento del {material3} para el producto 2: ')) #4
+
+M1_requerimiento_P3 = int(input(f'Ingrese el requerimiento del {material1} para el producto 3: ')) #10
+M2_requerimiento_P3 = int(input(f'Ingrese el requerimiento del {material2} para el producto 3: ')) #6
+M3_requerimiento_P3 = int(input(f'Ingrese el requerimiento del {material3} para el producto 3: ')) #5
+
+producto1_requerimientos = [M1_requerimiento_P1, M2_requerimiento_P1, M3_requerimiento_P1]
+producto2_requerimientos = [M1_requerimiento_P2, M2_requerimiento_P2, M3_requerimiento_P2]
+producto3_requerimientos = [M1_requerimiento_P3, M2_requerimiento_P3, M3_requerimiento_P3]
+
+
+print(f"\n--------- 4. PRESUPUESTO DE REQUERIMIENTO DE MATERIALES ----------")
+print("{:<25} {:<20} {:<20} {:<12}".format("", "1er. Semestre", "2do. Semestre", "Total 2023"))
+
+#producto a
+print("{:<30} {:<20} {:<20} {:<12}".format(f"Unidades a producir {producto1}", f"{unidades_a_producir_sem1_list[0]:,}", f"{unidades_a_producir_sem2_list[0]:,}", f"{unidades_a_producir[0]:,}"))
+print(f"Material {material1}")
+print("{:<30} {:<20} {:<20} {:<12}".format("Requerimiento de " + material1, f"{M1_requerimiento_P1:,}", f"{M1_requerimiento_P1:,}", f"{M1_requerimiento_P1:,}"))
+print("{:<30} {:<20} {:<20} {:<12}".format("Total de material " + material1,f"{M1_requerimiento_P1*unidades_a_producir_sem1_list[0]:,}", f"{M1_requerimiento_P1*unidades_a_producir_sem2_list[0]:,}", f"{M1_requerimiento_P1*unidades_a_producir[0]:,}"))
+print(f"Material {material2}")
+print("{:<30} {:<20} {:<20} {:<12}".format("Requerimiento de " + material2, f"{M2_requerimiento_P1:,}", f"{M2_requerimiento_P1:,}", f"{M2_requerimiento_P1:,}"))
+print("{:<30} {:<20} {:<20} {:<12}".format("Total de material " + material2,f"{M2_requerimiento_P1*unidades_a_producir_sem1_list[0]:,}", f"{M2_requerimiento_P1*unidades_a_producir_sem2_list[0]:,}", f"{M2_requerimiento_P1*unidades_a_producir[0]:,}"))
+print(f"Material {material3}")
+print("{:<30} {:<20} {:<20} {:<12}".format("Requerimiento de " + material3, f"{M3_requerimiento_P1:,}", f"{M3_requerimiento_P1:,}", f"{M3_requerimiento_P1:,}"))
+print("{:<30} {:<20} {:<20} {:<12}".format("Total de material " + material3,f"{M3_requerimiento_P1*unidades_a_producir_sem1_list[0]:,}", f"{M3_requerimiento_P1*unidades_a_producir_sem2_list[0]:,}", f"{M3_requerimiento_P1*unidades_a_producir[0]:,}"))
+print('\n') 
+
+###producto b
+print("{:<30} {:<20} {:<20} {:<12}".format(f"Unidades a producir {producto2}", f"{unidades_a_producir_sem1_list[1]:,}", f"{unidades_a_producir_sem2_list[1]:,}", f"{unidades_a_producir[1]:,}"))
+print(f"Material {material1}")
+print("{:<30} {:<20} {:<20} {:<12}".format("Requerimiento de " + material1, f"{M1_requerimiento_P2:,}", f"{M1_requerimiento_P2:,}", f"{M1_requerimiento_P2:,}"))
+print("{:<30} {:<20} {:<20} {:<12}".format("Total de material " + material1,f"{M1_requerimiento_P2*unidades_a_producir_sem1_list[1]:,}", f"{M1_requerimiento_P2*unidades_a_producir_sem2_list[1]:,}", f"{M1_requerimiento_P2*unidades_a_producir[1]:,}"))
+print(f"Material {material2}")
+print("{:<30} {:<20} {:<20} {:<12}".format("Requerimiento de " + material2, f"{M2_requerimiento_P2:,}", f"{M2_requerimiento_P2:,}", f"{M2_requerimiento_P2:,}"))
+print("{:<30} {:<20} {:<20} {:<12}".format("Total de material " + material2,f"{M2_requerimiento_P2*unidades_a_producir_sem1_list[1]:,}", f"{M2_requerimiento_P2*unidades_a_producir_sem2_list[1]:,}", f"{M2_requerimiento_P2*unidades_a_producir[1]:,}"))
+print(f"Material {material3}")
+print("{:<30} {:<20} {:<20} {:<12}".format("Requerimiento de " + material3, f"{M3_requerimiento_P2:,}", f"{M3_requerimiento_P2:,}", f"{M3_requerimiento_P2:,}"))
+print("{:<30} {:<20} {:<20} {:<12}".format("Total de material " + material3,f"{M3_requerimiento_P2*unidades_a_producir_sem1_list[1]:,}", f"{M3_requerimiento_P2*unidades_a_producir_sem2_list[1]:,}", f"{M3_requerimiento_P2*unidades_a_producir[1]:,}"))
+print('\n')
+
+#producto c
+print("{:<30} {:<20} {:<20} {:<12}".format(f"Unidades a producir {producto3}", f"{unidades_a_producir_sem1_list[2]:,}", f"{unidades_a_producir_sem2_list[2]:,}", f"{unidades_a_producir[2]:,}"))
+print(f"Material {material1}")
+print("{:<30} {:<20} {:<20} {:<12}".format("Requerimiento de " + material1, f"{M1_requerimiento_P3:,}", f"{M1_requerimiento_P3:,}", f"{M1_requerimiento_P3:,}"))
+print("{:<30} {:<20} {:<20} {:<12}".format("Total de material " + material1,f"{M1_requerimiento_P3*unidades_a_producir_sem1_list[2]:,}", f"{M1_requerimiento_P3*unidades_a_producir_sem2_list[2]:,}", f"{M1_requerimiento_P3*unidades_a_producir[2]:,}"))
+print(f"Material {material2}")
+print("{:<30} {:<20} {:<20} {:<12}".format("Requerimiento de " + material2, f"{M2_requerimiento_P3:,}", f"{M2_requerimiento_P3:,}", f"{M2_requerimiento_P3:,}"))
+print("{:<30} {:<20} {:<20} {:<12}".format("Total de material " + material2,f"{M2_requerimiento_P3*unidades_a_producir_sem1_list[2]:,}", f"{M2_requerimiento_P3*unidades_a_producir_sem2_list[2]:,}", f"{M2_requerimiento_P3*unidades_a_producir[2]:,}"))
+print(f"Material {material3}")
+print("{:<30} {:<20} {:<20} {:<12}".format("Requerimiento de " + material3, f"{M3_requerimiento_P3:,}", f"{M3_requerimiento_P3:,}", f"{M3_requerimiento_P3:,}"))
+print("{:<30} {:<20} {:<20} {:<12}".format("Total de material " + material3,f"{M3_requerimiento_P3*unidades_a_producir_sem1_list[2]:,}", f"{M3_requerimiento_P3*unidades_a_producir_sem2_list[2]:,}", f"{M3_requerimiento_P3*unidades_a_producir[2]:,}"))
+
+print('\n')
+print("Total de requerimientos (gramos)")
+total_materialA_sem1 = M1_requerimiento_P1*unidades_a_producir_sem1_list[0] + M1_requerimiento_P2*unidades_a_producir_sem1_list[1] + M1_requerimiento_P3*unidades_a_producir_sem1_list[2]
+total_materialA_sem2 = M1_requerimiento_P1*unidades_a_producir_sem2_list[0] + M1_requerimiento_P2*unidades_a_producir_sem2_list[1] + M1_requerimiento_P3*unidades_a_producir_sem2_list[2]
+total_materialA = total_materialA_sem1 + total_materialA_sem2
+
+total_materialB_sem1 = M2_requerimiento_P1*unidades_a_producir_sem1_list[0] + M2_requerimiento_P2*unidades_a_producir_sem1_list[1] + M2_requerimiento_P3*unidades_a_producir_sem1_list[2]
+total_materialB_sem2 = M2_requerimiento_P1*unidades_a_producir_sem2_list[0] + M2_requerimiento_P2*unidades_a_producir_sem2_list[1] + M2_requerimiento_P3*unidades_a_producir_sem2_list[2]
+total_materialB = total_materialB_sem1 + total_materialB_sem2
+
+total_materialC_sem1 = M3_requerimiento_P1*unidades_a_producir_sem1_list[0] + M3_requerimiento_P2*unidades_a_producir_sem1_list[1] + M3_requerimiento_P3*unidades_a_producir_sem1_list[2]
+total_materialC_sem2 = M3_requerimiento_P1*unidades_a_producir_sem2_list[0] + M3_requerimiento_P2*unidades_a_producir_sem2_list[1] + M3_requerimiento_P3*unidades_a_producir_sem2_list[2]
+total_materialC = total_materialC_sem1 + total_materialC_sem2
+
+print("{:<30} {:<20} {:<20} {:<12}".format(f"Material {material1}", f"{total_materialA_sem1:,}", f"{total_materialA_sem2:,}", f"{total_materialA:,}"))
+print("{:<30} {:<20} {:<20} {:<12}".format(f"Material {material2}", f"{total_materialB_sem1:,}", f"{total_materialB_sem2:,}", f"{total_materialB:,}"))
+print("{:<30} {:<20} {:<20} {:<12}".format(f"Material {material3}", f"{total_materialC_sem1:,}", f"{total_materialC_sem2:,}", f"{total_materialC:,}"))
+print('\n')
+
+######################################################### CÉDULA 5
+print("\n5. Presupuesto de Compra de Materiales")
+# Primer semestre
+print('---Primer semestre---')
+P1_invfinal_sem1 = int(input(f'Ingrese el inventario inicial del {material1}: ')) #10000
+P2_invfinal_sem1 = int(input(f'Ingrese el inventario inicial del {material2}: ')) #15000
+P3_invfinal_sem1 = int(input(f'Ingrese el inventario inicial del {material3}: ')) #5000
+print('\n')
+precio_material1_sem1= float(input(f'Ingrese el precio de compra del {material1}: ')) #2
+precio_material2_sem1=float(input(f'Ingrese el precio de compra del {material2}: ')) #2.70
+precio_material3_sem1=float(input(f'Ingrese el precio de compra del {material3}: ')) #4
+
+P1_invinicial_sem1 = P1_invfinal_sem1
+P2_invinicial_sem1 = P2_invfinal_sem1
+P3_invinicial_sem1 = P3_invfinal_sem1
+
+# Segundo semestre
+print('---Segundo semestre---')
+P1_invfinal_sem2 = int(input(f'Ingrese el inventario final del {material1}: ')) #8000
+P2_invfinal_sem2 = int(input(f'Ingrese el inventario final del {material2}: ')) #4000
+P3_invfinal_sem2 = int(input(f'Ingrese el inventario final del {material3}: ')) #3000
+
+inventario_final_sem2_list = [P1_invfinal_sem2, P2_invfinal_sem2, P3_invfinal_sem2]
+print('\n')
+precio_material1_sem2= float(input(f'Ingrese el precio de compra del {material1}: ')) #2.10
+precio_material2_sem2=float(input(f'Ingrese el precio de compra del {material2}: ')) #3
+precio_material3_sem2=float(input(f'Ingrese el precio de compra del {material3}: ')) #4.40
+
+P1_invinicial_sem2 = P1_invfinal_sem1
+P2_invinicial_sem2 = P2_invfinal_sem1
+P3_invinicial_sem2 = P3_invfinal_sem1
+
+inventario_materiales = {
+    material1: {"requerimiento": [total_materialA_sem1, total_materialA_sem2],
+                "inventario final": [P1_invfinal_sem1, P1_invfinal_sem2],
+                "inventario inicial": [P1_invinicial_sem1, P1_invinicial_sem2],
+                "precio_compra": [precio_material1_sem1, precio_material1_sem2]},
+    material2: {"requerimiento": [total_materialB_sem1, total_materialB_sem2],
+                "inventario final": [P2_invfinal_sem1, P2_invfinal_sem2],
+                "inventario inicial": [P2_invinicial_sem1, P2_invinicial_sem2],
+                "precio_compra": [precio_material2_sem1, precio_material2_sem2]},
+    material3: {"requerimiento": [total_materialC_sem1, total_materialC_sem2],
+                "inventario final": [P3_invfinal_sem1, P3_invfinal_sem2],
+                "inventario inicial": [P3_invinicial_sem1, P3_invinicial_sem2],
+                "precio_compra": [precio_material3_sem1, precio_material3_sem2]}
+}
+
+compras_sem1_list = []
+compras_sem2_list = []
+precio_compra_sem2_list = []
+
+print(f"\n--------- 5. PRESUPUESTO DE REQUERIMIENTO DE MATERIALES ----------")
+print("{:<30} {:<20} {:<20} {:<12}".format("", "1er. Semestre", "2do. Semestre", "Total 2023"))
+for material, datos in inventario_materiales.items():
+    material_sem1 = datos["requerimiento"][0]
+    material_sem2 = datos["requerimiento"][1]
+    
+    inventario_final_sem1 = datos["inventario final"][0]
+    inventario_inicial_sem1 = datos["inventario inicial"][0]
+    
+    inventario_final_sem2 = datos["inventario final"][1]
+    inventario_inicial_sem2 = datos["inventario inicial"][1]
+    
+
+    total_unidades_sem1 = material_sem1 + inventario_final_sem1
+    total_unidades_sem2 = material_sem2 + inventario_final_sem2
+
+    unidades_a_producir_sem1 = total_unidades_sem1 - inventario_inicial_sem1
+    unidades_a_producir_sem2 = total_unidades_sem2 - inventario_inicial_sem2
+
+    # Agregar los valores a las listas   
+    precio_compra_sem1 = datos["precio_compra"][0]
+    precio_compra_sem2 = datos["precio_compra"][1]
+    
+    precio_compra_sem2_list.append(precio_compra_sem2)
+
+    costo_total_sem1 = unidades_a_producir_sem1 * precio_compra_sem1
+    costo_total_sem2 = unidades_a_producir_sem2 * precio_compra_sem2
+    costo_total = costo_total_sem1 + costo_total_sem2
+    
+    compras_sem1_list.append(costo_total_sem1)
+    compras_sem2_list.append(costo_total_sem2)
+
+
+    print("{:<30} {:<20} {:<20} {:<12}".format(material, "", "", ""))
+    print("{:<30} {:<20} {:<20} {:<12}".format("Requerimiento de materiales", f"{material_sem1:,}", f"{material_sem2:,}", f"{material_sem1 + material_sem2:,}"))
+    print("{:<30} {:<20} {:<20} {:<12}".format("(+) Inventario final", f"{inventario_final_sem1:,}", f"{inventario_final_sem2:,}", f"{(inventario_final_sem2):,}" ))
+    print("{:<30} {:<20} {:<20} {:<12}".format("(=) Total materiales", f"{total_unidades_sem1:,}", f"{total_unidades_sem2:,}", f"{(material_sem1 + material_sem2) + (inventario_final_sem2):,}", ""))
+    print("{:<30} {:<20} {:<20} {:<12}".format("(-) Inventario inicial", f"{inventario_inicial_sem1:,}", f"{inventario_inicial_sem2:,}", f"{inventario_inicial_sem2:,}" ))
+    print("{:<30} {:<20} {:<20} {:<12}".format("(=) Material a comprar", f"{unidades_a_producir_sem1:,}", f"{unidades_a_producir_sem2:,}", f"{((material_sem1 + material_sem2) + (inventario_final_sem2)) - (inventario_inicial_sem2):,}", ""))
+    print("{:<30} {:<20} {:<20} {:<12}".format("Precio de compra", f"${precio_compra_sem1:,}", f"${precio_compra_sem2:,}", ""))
+    print("{:<30} {:<20} {:<20} {:<12}".format("(=) Total de material "+ material, f"${costo_total_sem1:,}", f"${costo_total_sem2:,}", f"${costo_total:,}"))
+    print("\n")
+    
+# Suma los elementos correspondientes de las listas
+total_sem1 = sum(compras_sem1_list)
+total_sem2 = sum(compras_sem2_list)
+total_compras = total_sem1 + total_sem2
+
+# Imprime la línea de compras totales
+print("{:<30} {:<20} {:<20} {:<12}".format("Compras totales", f"${total_sem1:,}", f"${total_sem2:,}", f"${total_compras:,}"))
+
+############################################### CÉDULA 6
+print("\n6. Determinación del saldo de proveedores y flujo de salidas")
+saldo_proveedores2022=int(input('Ingrese el saldo de proveedores de 31-Dic-2022: ')) #50000
+
+print(f"\n--------- 6. DETERMINACIÓN DEL SALDO DE PROVEEDORES Y FLUJO DE SALIDAS ----------")
+print("\n")
+print("{:<30} {:<20} {:<20} {:<12}".format("Descripción", "Importe", "Total", ""))
+print("{:<30} {:<20} {:<20} {:<12}".format("Saldo de Proveedores 2022", "", f"${saldo_proveedores2022:,}", ""))
+print("{:<30} {:<20} {:<20} {:<12}".format("Compras 2023", "", f"${total_compras:,}", ""))
+total_proveedores2023= saldo_proveedores2022 + total_compras
+print("{:<30} {:<20} {:<20} {:<12}".format("Total Proveedores 2023", "", f"${total_proveedores2023:,}", ""))
+print("\n")
+print("{:<30} {:<20} {:<20} {:<12}".format("Salidas de efectivo: ", "", "", ""))
+por_proveedores2022=saldo_proveedores2022
+print("{:<30} {:<20} {:<20} {:<12}".format("Por Proveedores 2022", f"${por_proveedores2022:,}", "", ""))
+por_proveedores2023=total_compras*0.6
+print("{:<30} {:<20} {:<20} {:<12}".format("Por Proveedores 2023", f"${por_proveedores2023:,}", "", ""))
+total_salidas2023=saldo_proveedores2022+por_proveedores2023
+print("{:<30} {:<20} {:<20} {:<12}".format("Total de Salidas 2023: ", "", f"${total_salidas2023:,}", ""))
+print("\n")
+saldo_proveedores2023=total_proveedores2023-total_salidas2023
+print("{:<30} {:<20} {:<20} {:<12}".format("Saldo de Proveedores 2023: ", "", f"${saldo_proveedores2023:,}", ""))
+print("\n")
+
+############################################### CÉDULA 7
+print("\n7. Presupuesto de Mano de Obra Directa")
+P1_horas_por_unidad= int(input(f'Ingrese las horas requeridas por unidad del producto {producto1}: ')) #3
+P2_horas_por_unidad= int(input(f'Ingrese las horas requeridas por unidad del producto {producto2}: ')) #1
+P3_horas_por_unidad= int(input(f'Ingrese las horas requeridas por unidad del producto {producto3}: ')) #2
+
+print('----Primer semestre----')
+cuotaporhora_sem1= int(input(f'Ingrese la cuota por hora del primer semestre: ')) #10
+
+print('----Segundo semestre----')
+cuotaporhora_sem2= int(input(f'Ingrese la cuota por hora del primer semestre: ')) #11
+
+presupuesto_manodeobra = {
+    producto1: {"unidades": [unidades_a_producir_sem1_list[0], unidades_a_producir_sem2_list[0]],
+                "horas_unidad": [P1_horas_por_unidad],
+                "cuota_por_hora": [cuotaporhora_sem1, cuotaporhora_sem2]},
+    
+    producto2: {"unidades": [unidades_a_producir_sem1_list[1], unidades_a_producir_sem2_list[1]],
+                "horas_unidad": [P2_horas_por_unidad],
+                "cuota_por_hora": [cuotaporhora_sem1, cuotaporhora_sem2]},
+    
+    producto3: {"unidades": [unidades_a_producir_sem1_list[2], unidades_a_producir_sem2_list[2]],
+                "horas_unidad": [P3_horas_por_unidad],
+                "cuota_por_hora": [cuotaporhora_sem1, cuotaporhora_sem2]}
+}
+
+print(f"\n--------- 7. PRESUPUESTO DE MANO DE OBRA DIRECTA ---------")
+print("\n")
+print("{:<30} {:<20} {:<20} {:<12}".format("", "1er. Semestre", "2do. Semestre", "Total 2023"))
+
+total_horas_sem1_list = []
+total_horas_sem2_list = []
+total_importe_mod_sem1_list = []
+total_importe_mod_sem2_list = []
+
+horas_por_unidad_list=[]
+
+cuota_por_hora_sem2_list = []
+
+for producto, datos in presupuesto_manodeobra.items():
+    unidades_sem1 = datos["unidades"][0]
+    unidades_sem2 = datos["unidades"][1]
+    
+    horas_por_unidad = datos["horas_unidad"][0]
+    
+    horas_por_unidad_list.append(horas_por_unidad)
+
+    total_horas_sem1 = unidades_sem1 * horas_por_unidad
+    total_horas_sem2 = unidades_sem2 * horas_por_unidad
+    
+    importe_mod_sem1= total_horas_sem1 * cuotaporhora_sem1
+    importe_mod_sem2= total_horas_sem2 * cuotaporhora_sem2    
+
+    total_horas_sem1_list.append(total_horas_sem1)
+    total_horas_sem2_list.append(total_horas_sem2)
+    
+    total_importe_mod_sem1_list.append(importe_mod_sem1)
+    total_importe_mod_sem2_list.append(importe_mod_sem2)
+    
+    cuota_por_hora_sem2_list.append(cuotaporhora_sem2)
+
+    print("{:<30} {:<20} {:<20} {:<12}".format("Producto "+producto, "", "", ""))
+    print("{:<30} {:<20} {:<20} {:<12}".format("Unidades a producir", f"{unidades_sem1:,}", f"{unidades_sem2:,}", f"{unidades_sem1 + unidades_sem2:,}"))
+    print("{:<30} {:<20} {:<20} {:<12}".format("Horas requeridas por unidad", f"{horas_por_unidad:,}", f"{horas_por_unidad:,}", f"{(horas_por_unidad):,}" ))
+    print("{:<30} {:<20} {:<20} {:<12}".format("Total de horas requeridas", f"{total_horas_sem1:,}", f"{total_horas_sem2:,}", f"{(total_horas_sem1 + total_horas_sem2):,}"))
+    print("{:<30} {:<20} {:<20} {:<12}".format("Cuota por hora", f"${cuotaporhora_sem1:,}", f"${cuotaporhora_sem2:,}", "" ))
+    print("{:<30} {:<20} {:<20} {:<12}".format("Importe de M.O.D.", f"${importe_mod_sem1:,}", f"${importe_mod_sem2:,}", f"${(importe_mod_sem1 + importe_mod_sem2):,}", ""))
+    print("\n")
+
+
+total_horas_sem1 = sum(total_horas_sem1_list)
+total_horas_sem2 = sum(total_horas_sem2_list)
+total_horas=total_horas_sem1 + total_horas_sem2
+
+total_importe_mod_sem1 = sum(total_importe_mod_sem1_list)
+total_importe_mod_sem2 = sum(total_importe_mod_sem2_list)
+total_importe_mod=total_importe_mod_sem1+total_importe_mod_sem2
+
+print("{:<30} {:<20} {:<20} {:<12}".format("Total de horas requeridas", f"{total_horas_sem1:,}", f"{total_horas_sem2:,}", f"{total_horas:,}"))
+print("{:<30} {:<20} {:<20} {:<12}".format("por semestre", "" , "", ""))
+print("{:<30} {:<20} {:<20} {:<12}".format("Totales de M.O.D. por semestre", f"${total_importe_mod_sem1:,}", f"${total_importe_mod_sem2:,}", f"${total_importe_mod:,}"))
+
+
+############################################### CÉDULA 8
+print("\n8. Presupuesto de Gastos Indirectos de Fabricación")
+print('------Gastos de fabricación indirectos-----')
+depreciacion_GIF_anual=int(input('Ingrese el costo de la depreciación anual: ')) #100000
+seguros_GIF_anual=int(input('Ingrese el costo de seguros anual: ')) #5000
+mantenimiento_GIF_sem1=int(input('Ingrese el costo de mantenimiento del semestre 1: ')) #30000
+mantenimiento_GIF_sem2=int(input('Ingrese el costo de mantenimiento del semestre 2: ')) #35000
+energeticos_GIF_sem1=int(input('Ingrese el costo de mantenimiento del semestre 1: ')) #20000
+energeticos_GIF_sem2=int(input('Ingrese el costo de mantenimiento del semestre 2: ')) #32000
+varios_GIF_anual=int(input('Ingrese el costo de varios anual: ')) #10000
+
+print(f"\n--------- 8. PRESUPUESTO DE GASTOS INDIRECTOS DE FABRICACIÓN ---------")
+print("{:<30} {:<20} {:<20} {:<12}".format("", "1er. Semestre", "2do. Semestre", "Total 2023"))
+depreciacion_GIF_semestral= depreciacion_GIF_anual/2
+print("{:<30} {:<20} {:<20} {:<12}".format("Depreciación", f"${depreciacion_GIF_semestral:,}", f"${depreciacion_GIF_semestral:,}", f"${depreciacion_GIF_anual:,}"))
+
+seguros_GIF_semestral= seguros_GIF_anual/2
+print("{:<30} {:<20} {:<20} {:<12}".format("Seguros", f"${seguros_GIF_semestral:,}", f"${seguros_GIF_semestral:,}", f"${seguros_GIF_anual:,}"))
+
+mantenimiento_GIF_anual=mantenimiento_GIF_sem1+mantenimiento_GIF_sem2
+print("{:<30} {:<20} {:<20} {:<12}".format("Mantenimiento", f"${mantenimiento_GIF_sem1:,}", f"${mantenimiento_GIF_sem2:,}", f"${mantenimiento_GIF_anual:,}"))
+
+energeticos_GIF_anual=energeticos_GIF_sem1+energeticos_GIF_sem2
+print("{:<30} {:<20} {:<20} {:<12}".format("Energéticos", f"${energeticos_GIF_sem1:,}", f"${energeticos_GIF_sem2:,}", f"${energeticos_GIF_anual:,}"))
+
+varios_GIF_semestral=varios_GIF_anual/2
+print("{:<30} {:<20} {:<20} {:<12}".format("Varios", f"${varios_GIF_semestral:,}", f"${varios_GIF_semestral:,}", f"${varios_GIF_anual:,}"))
+
+total_GIF_sem1 = depreciacion_GIF_semestral + seguros_GIF_semestral + mantenimiento_GIF_sem1 + energeticos_GIF_sem1 + varios_GIF_semestral
+total_GIF_sem2 = depreciacion_GIF_semestral + seguros_GIF_semestral + mantenimiento_GIF_sem2 + energeticos_GIF_sem2 + varios_GIF_semestral
+
+total_GIF=total_GIF_sem1+total_GIF_sem2
+print("{:<30} {:<20} {:<20} {:<12}".format("Total GIF por semestre", f"${total_GIF_sem1:,}", f"${total_GIF_sem2:,}", f"${total_GIF:,}"))
+print("\n")
+print('Coeficiente para determinar el costo por hora de Gastos Indirectos de Fabricación')
+print("{:<30} {:<20} {:<20} {:<12}".format("Total de GIF", "", "", f"${total_GIF:,}"))
+print("{:<30} {:<20} {:<20} {:<12}".format("(/)Total horas MOD Anual", "", "", f"${total_horas:,}"))
+costo_por_hora_GIF=total_GIF/total_horas
+print("{:<30} {:<20} {:<20} {:<12}".format("(=)Costo por hora de GIF", "", "", f"${costo_por_hora_GIF:,}"))
+
+############################################### CÉDULA 9
+print("\n9. Presupuesto de Gastos de Operación")
+print('------Gastos de operación-----')
+
+depreciacion_GO_anual=int(input('Ingrese el costo de la depreciación anual: ')) #10000
+sueldos_GO_anual=int(input('Ingrese los sueldos anuales: ')) #200000
+comisiones_GO_sem1= total_ventas_1er_semestre * 0.05
+comisiones_GO_sem2= total_ventas_2do_semestre * 0.05
+varios_GO_sem1=int(input('Ingrese los varios del semestre 1: ')) #6000
+varios_GO_sem2=int(input('Ingrese los varios del semestre 2: ')) #7000
+intereses_GO_anual=int(input('Ingrese los intereses por obligaciones anuales: ')) #30000
+
+print(f"\n--------- 9. PRESUPUESTO DE GASTOS DE OPERACIÓN ---------")
+print("{:<30} {:<20} {:<20} {:<12}".format("", "1er. Semestre", "2do. Semestre", "Total 2023"))
+
+depreciacion_GO_semestral= depreciacion_GO_anual/2
+print("{:<30} {:<20} {:<20} {:<12}".format("Depreciación", f"${depreciacion_GO_semestral:,}", f"${depreciacion_GO_semestral:,}", f"${depreciacion_GO_anual:,}"))
+
+sueldos_GO_semestral= sueldos_GO_anual/2
+print("{:<30} {:<20} {:<20} {:<12}".format("Sueldos y salarios", f"${sueldos_GO_semestral:,}", f"${sueldos_GO_semestral:,}", f"${sueldos_GO_anual:,}"))
+
+comisiones_GO_anual =comisiones_GO_sem1+comisiones_GO_sem2
+print("{:<30} {:<20} {:<20} {:<12}".format("Comisiones", f"${comisiones_GO_sem1:,}", f"${comisiones_GO_sem2:,}", f"${comisiones_GO_anual:,}"))
+
+varios_GO_anual=varios_GO_sem1+varios_GO_sem2
+print("{:<30} {:<20} {:<20} {:<12}".format("Varios", f"${varios_GO_sem1:,}", f"${varios_GO_sem2:,}", f"${varios_GO_anual:,}"))
+
+intereses_GO_semestral=intereses_GO_anual/2
+print("{:<30} {:<20} {:<20} {:<12}".format("Intereses por obligaciones", f"${intereses_GO_semestral:,}", f"${intereses_GO_semestral:,}", f"${intereses_GO_anual:,}"))
+
+total_GO_sem1 = depreciacion_GO_semestral+sueldos_GO_semestral+comisiones_GO_sem1+varios_GO_sem1+intereses_GO_semestral
+total_GO_sem2 = depreciacion_GO_semestral+sueldos_GO_semestral+comisiones_GO_sem2+varios_GO_sem2+intereses_GO_semestral
+
+total_GO=total_GO_sem1+total_GO_sem2
+print("{:<30} {:<20} {:<20} {:<12}".format("Total Gastos de Operación", f"${total_GO_sem1:,}", f"${total_GO_sem2:,}", f"${total_GO:,}"))
+print("\n")
+
+############################################### CÉDULA 10
+print("\n10. Determinación del Costo Unitario de Productos terminados")
+
+print(f"\n--------- 10. DETERMINACIÓN DEL COSTO UNITARIO DE PRODUCTOS TERMINADOS ----------")
+print("{:<35} {:<20} {:<20} {:<12}".format("", "", "Producto "+producto1, ""))
+print("{:<35} {:<20} {:<20} {:<12}".format("Descripción", "Costo", "Cantidad", "Costo unitario"))
+
+#producto a
+print("{:<35} {:<20} {:<20} {:<12}".format(f"Material {material1}", f"${precio_compra_sem2_list[0]:,}", f"{producto1_requerimientos[0]:,}", f"${precio_compra_sem2_list[0]*producto1_requerimientos[0]:,}"))
+print("{:<35} {:<20} {:<20} {:<12}".format(f"Material {material2}", f"${precio_compra_sem2_list[1]:,}", f"{producto1_requerimientos[1]:,}", f"${precio_compra_sem2_list[1]*producto1_requerimientos[1]:,}"))
+print("{:<35} {:<20} {:<20} {:<12}".format(f"Material {material3}", f"${precio_compra_sem2_list[2]:,}", f"{producto1_requerimientos[2]:,}", f"${precio_compra_sem2_list[2]*producto1_requerimientos[2]:,}"))
+print("{:<35} {:<20} {:<20} {:<12}".format(f"Mano de obra", f"${cuota_por_hora_sem2_list[0]:,}", f"{horas_por_unidad_list[0]:,}", f"${cuota_por_hora_sem2_list[0]*horas_por_unidad_list[0]:,}"))
+print("{:<35} {:<20} {:<20} {:<12}".format(f"Gastos Indirectos Fabricación", f"${costo_por_hora_GIF:,}", f"{horas_por_unidad_list[0]:,}", f"${costo_por_hora_GIF*horas_por_unidad_list[0]:,}"))
+costo_unitario_P1=(precio_compra_sem2_list[0]*producto1_requerimientos[0])+(precio_compra_sem2_list[1]*producto1_requerimientos[1])+(precio_compra_sem2_list[2]*producto1_requerimientos[2])+(cuota_por_hora_sem2_list[0]*horas_por_unidad_list[0])+(costo_por_hora_GIF*horas_por_unidad_list[0])
+print("{:<35} {:<20} {:<20} {:<12}".format(f"Costo Unitario", "", "", f"${costo_unitario_P1:,}"))
+
+###producto b
+print("{:<35} {:<20} {:<20} {:<12}".format("", "", "Producto "+producto2, ""))
+print("{:<35} {:<20} {:<20} {:<12}".format("Descripción", "Costo", "Cantidad", "Costo unitario"))
+
+print("{:<35} {:<20} {:<20} {:<12}".format(f"Material {material1}", f"${precio_compra_sem2_list[0]:,}", f"{producto2_requerimientos[0]:,}", f"${precio_compra_sem2_list[0]*producto2_requerimientos[0]:,}"))
+print("{:<35} {:<20} {:<20} {:<12}".format(f"Material {material2}", f"${precio_compra_sem2_list[1]:,}", f"{producto2_requerimientos[1]:,}", f"${precio_compra_sem2_list[1]*producto2_requerimientos[1]:,}"))
+print("{:<35} {:<20} {:<20} {:<12}".format(f"Material {material3}", f"${precio_compra_sem2_list[2]:,}", f"{producto2_requerimientos[2]:,}", f"${precio_compra_sem2_list[2]*producto2_requerimientos[2]:,}"))
+print("{:<35} {:<20} {:<20} {:<12}".format(f"Mano de obra", f"${cuota_por_hora_sem2_list[0]:,}", f"{horas_por_unidad_list[1]:,}", f"${cuota_por_hora_sem2_list[0]*horas_por_unidad_list[1]:,}"))
+print("{:<35} {:<20} {:<20} {:<12}".format(f"Gastos Indirectos Fabricación", f"${costo_por_hora_GIF:,}", f"{horas_por_unidad_list[1]:,}", f"${costo_por_hora_GIF*horas_por_unidad_list[1]:,}"))
+costo_unitario_P2=(precio_compra_sem2_list[0]*producto2_requerimientos[0])+(precio_compra_sem2_list[1]*producto2_requerimientos[1])+(precio_compra_sem2_list[2]*producto2_requerimientos[2])+(cuota_por_hora_sem2_list[0]*horas_por_unidad_list[1])+(costo_por_hora_GIF*horas_por_unidad_list[1])
+print("{:<35} {:<20} {:<20} {:<12}".format(f"Costo Unitario", "", "", f"${costo_unitario_P2:,}"))
+
+###producto c
+print("{:<35} {:<20} {:<20} {:<12}".format("", "", "Producto "+producto3, ""))
+print("{:<35} {:<20} {:<20} {:<12}".format("Descripción", "Costo", "Cantidad", "Costo unitario"))
+
+print("{:<35} {:<20} {:<20} {:<12}".format(f"Material {material1}", f"${precio_compra_sem2_list[0]:,}", f"{producto3_requerimientos[0]:,}", f"${precio_compra_sem2_list[0]*producto3_requerimientos[0]:,}"))
+print("{:<35} {:<20} {:<20} {:<12}".format(f"Material {material2}", f"${precio_compra_sem2_list[1]:,}", f"{producto3_requerimientos[1]:,}", f"${precio_compra_sem2_list[1]*producto3_requerimientos[1]:,}"))
+print("{:<35} {:<20} {:<20} {:<12}".format(f"Material {material3}", f"${precio_compra_sem2_list[2]:,}", f"{producto3_requerimientos[2]:,}", f"${precio_compra_sem2_list[2]*producto3_requerimientos[2]:,}"))
+print("{:<35} {:<20} {:<20} {:<12}".format(f"Mano de obra", f"${cuota_por_hora_sem2_list[0]:,}", f"{horas_por_unidad_list[2]:,}", f"${cuota_por_hora_sem2_list[0]*horas_por_unidad_list[2]:,}"))
+print("{:<35} {:<20} {:<20} {:<12}".format(f"Gastos Indirectos Fabricación", f"${costo_por_hora_GIF:,}", f"{horas_por_unidad_list[2]:,}", f"${costo_por_hora_GIF*horas_por_unidad_list[2]:,}"))
+costo_unitario_P3=(precio_compra_sem2_list[0]*producto3_requerimientos[0])+(precio_compra_sem2_list[1]*producto3_requerimientos[1])+(precio_compra_sem2_list[2]*producto3_requerimientos[2])+(cuota_por_hora_sem2_list[0]*horas_por_unidad_list[2])+(costo_por_hora_GIF*horas_por_unidad_list[2])
+print("{:<35} {:<20} {:<20} {:<12}".format(f"Costo Unitario", "", "", f"${costo_unitario_P3:,}"))
+
+############################################### CÉDULA 11
+
+print("\n11. Valuación de Inventarios Finales")
+print("--------------- VALUACIÓN DE INVENTARIOS FINALES ---------------")
+print('Inventario Final de Materiales')
+print("{:<35} {:<20} {:<20} {:<12}".format("Descripción", "Unidades", "Costo unitario", "Costo total"))
+
+print("{:<35} {:<20} {:<20} {:<12}".format(f"Material {material1}",f"{inventario_final_sem2_list[0]}" ,f"${precio_compra_sem2_list[0]:,}", f"${precio_compra_sem2_list[0]*inventario_final_sem2_list[0]:,}"))
+print("{:<35} {:<20} {:<20} {:<12}".format(f"Material {material2}",f"{inventario_final_sem2_list[1]}" , f"${precio_compra_sem2_list[1]:,}", f"${precio_compra_sem2_list[1]*inventario_final_sem2_list[1]:,.2f}"))
+print("{:<35} {:<20} {:<20} {:<12}".format(f"Material {material3}",f"{inventario_final_sem2_list[2]}" ,f"${precio_compra_sem2_list[2]:,}", f"${precio_compra_sem2_list[2]*inventario_final_sem2_list[2]:,.2f}"))
+costo_total_inv_final=precio_compra_sem2_list[0]*inventario_final_sem2_list[0]+precio_compra_sem2_list[1]*inventario_final_sem2_list[1]+precio_compra_sem2_list[2]*inventario_final_sem2_list[2]
+print("{:<35} {:<20} {:<20} {:<12}".format(f"Inventario Final de Materiales", "" ,"", f"${costo_total_inv_final:,}"))
+
+print(f'\nInventario Final de Producto Terminado')
+print("{:<35} {:<20} {:<20} {:<12}".format("Descripción", "Unidades", "Costo unitario", "Costo total"))
+
+print("{:<35} {:<20} {:<20} {:<12}".format(f"Producto {producto1}",f"{invfinal_productoterminado[0]}" ,f"${costo_unitario_P1:,}", f"${costo_unitario_P1*invfinal_productoterminado[0]:,}"))
+print("{:<35} {:<20} {:<20} {:<12}".format(f"Producto {producto2}",f"{invfinal_productoterminado[1]}" , f"${costo_unitario_P2:,}", f"${costo_unitario_P2*invfinal_productoterminado[1]:,.2f}"))
+print("{:<35} {:<20} {:<20} {:<12}".format(f"Producto {producto3}",f"{invfinal_productoterminado[2]}" ,f"${costo_unitario_P3:,}", f"${costo_unitario_P3*invfinal_productoterminado[2]:,}"))
+costo_total_inv_final_prodterm=costo_unitario_P1*invfinal_productoterminado[0]+costo_unitario_P2*invfinal_productoterminado[1]+costo_unitario_P3*invfinal_productoterminado[2]
+print("{:<35} {:<20} {:<20} {:<12}".format(f"Inventario Final de Producto Terminado", "" ,"", f"${costo_total_inv_final_prodterm:,}"))
+
+############################################### PRESUPUESTO FINANCIERO
+############################################### ESTADO DE COSTO DE PRODUCCIÓN Y VENTAS
+print(f'\nEstado de Costo de Producción y Ventas')
+saldo_inicial_materiales= int(input('Ingresa el saldo inicial de materiales: ')) #80005
+
+inv_inicial_productos_terminados= int(input('Ingresa el inventario inicial de productos terminados: ')) #150000
+
+print('LABORATORIOS REGIONALES S.A.')
+print('Estado de Costo de Producción y Ventas')
+print('Presupuesto del 1 de enero al 31 de diciembre del 2023')
+print("{:<35} {:<20} {:<20} {:<12}".format("Saldo Inicial de Materiales", "", "", f"${saldo_inicial_materiales:,}"))
+print("{:<35} {:<20} {:<20} {:<12}".format("(+) Compras de Materiales", "", "", f"${total_compras:,}"))
+material_disponible=saldo_inicial_materiales+total_compras
+print("{:<35} {:<20} {:<20} {:<12}".format("(=) Material Disponible", "", "", f"${material_disponible:,}"))
+print("{:<35} {:<20} {:<20} {:<12}".format("(-) Inventario Final de Materiales", "", "", f"${costo_total_inv_final:,}"))
+materiales_utilizados=material_disponible-costo_total_inv_final
+print("{:<35} {:<20} {:<20} {:<12}".format("(=) Materiales Utilizados", "", "", f"${materiales_utilizados:,}"))
+print("{:<35} {:<20} {:<20} {:<12}".format("(+) Mano de Obra Directa", "", "", f"${total_importe_mod:,}"))
+print("{:<35} {:<20} {:<20} {:<12}".format("(+) Gastos de Fabricación Indirectos", "", "", f"${total_GIF:,}"))
+costo_de_produccion=materiales_utilizados+total_importe_mod+total_GIF
+print("{:<35} {:<20} {:<20} {:<12}".format("(=) Costo de Producción", "", "", f"${costo_de_produccion:,}"))
+print("{:<35} {:<20} {:<20} {:<12}".format("(+) Inventario Inicial de Productos Terminados", "", "", f"${inv_inicial_productos_terminados:,}"))
+total_produccion_disponible=costo_de_produccion+inv_inicial_productos_terminados
+print("{:<35} {:<20} {:<20} {:<12}".format("(=) Total de Producción Disponible", "", "", f"${total_produccion_disponible:,}"))
+print("{:<35} {:<20} {:<20} {:<12}".format("(-) Inventario Final de Productos Terminados", "", "", f"${costo_total_inv_final_prodterm:,}"))
+costo_de_ventas=total_produccion_disponible-costo_total_inv_final_prodterm
+print("{:<35} {:<20} {:<20} {:<12}".format("(=) Costo de Ventas", "", "", f"${costo_de_ventas:,}"))
+
+
+############################################### ESTADO DE RESULTADOS
+print(f'\nEstado de Resultados')
+
+print('LABORATORIOS REGIONALES S.A.')
+print('Estado de Resultados')
+print('Presupuesto del 1 de enero al 31 de diciembre del 2023')
+print("{:<35} {:<20} {:<20} {:<12}".format("Ventas", "", "", f"${total_ventas2023:,}"))
+print("{:<35} {:<20} {:<20} {:<12}".format("(-) Costo de Ventas", "", "", f"${costo_de_ventas:,}"))
+utilidad_bruta=total_ventas2023-costo_de_ventas
+print("{:<35} {:<20} {:<20} {:<12}".format("(=) Utilidad Bruta", "", "", f"${utilidad_bruta:,}"))
+print("{:<35} {:<20} {:<20} {:<12}".format("(-) Gastos de Operación", "", "", f"${total_GO:,}"))
+utilidad_operacion=utilidad_bruta-total_GO
+print("{:<35} {:<20} {:<20} {:<12}".format("(=) Utilidad de Operación", "", "", f"${utilidad_operacion:,}"))
+ISR=utilidad_operacion*0.3
+PTU=utilidad_operacion*0.1
+print("{:<35} {:<20} {:<20} {:<12}".format("(-) ISR", "", "", f"${ISR:,}"))
+print("{:<35} {:<20} {:<20} {:<12}".format("(-) PTU", "", "", f"${PTU:,}"))
+utilidad_neta=utilidad_operacion-ISR-PTU
+print("{:<35} {:<20} {:<20} {:<12}".format("(=) Utilidad Neta", "", "", f"${utilidad_neta:,}"))
+
+############################################### ESTADO DE FLUJO DE EFECTIVO
+print(f'\nEstado de Flujo de Efectivo')
+saldo_inicial_efectivo= int(input('Ingresa el saldo inicial de efectivo: ')) #50000
+activo_fijo= int(input('Ingresa el costo del activo fijo (maquinaria): ')) #50000
+ISR_2022= int(input('Ingresa el ISR del 2022: ')) #50000
+
+print('LABORATORIOS REGIONALES S.A.')
+print('Estado de Flujo de Efectivo')
+print('Presupuesto del 1 de enero al 31 de diciembre del 2023')
+print("{:<35} {:<20} {:<20} {:<12}".format("Saldo Inicial de Efectivo", "", "", f"${saldo_inicial_efectivo:,}"))
+print("{:<35} {:<20} {:<20} {:<12}".format("Entradas: ", "", "", ""))
+print("{:<35} {:<20} {:<20} {:<12}".format("Cobranza 2023", "", f"${ventas2023*0.9:,}", ""))
+print("{:<35} {:<20} {:<20} {:<12}".format("Cobranza 2022", "", f"${saldo_clientes2022}", ""))
+total_entradas=(ventas2023*0.9)+saldo_clientes2022
+print("{:<35} {:<20} {:<20} {:<12}".format("Total de Entradas", "", "", f"${total_entradas:,}"))
+efectivo_disponible=total_entradas+saldo_inicial_efectivo
+print("{:<35} {:<20} {:<20} {:<12}".format("Efectivo Disponible", "", "", f"${efectivo_disponible:,}"))
+print("{:<35} {:<20} {:<20} {:<12}".format("Salidas: ", "", "", ""))
+print("{:<35} {:<20} {:<20} {:<12}".format("Proveedores 2023 ", "", f"${por_proveedores2023}", ""))
+print("{:<35} {:<20} {:<20} {:<12}".format("Proveedores 2022 ", "", f"${por_proveedores2022}", ""))
+print("{:<35} {:<20} {:<20} {:<12}".format("Pago MOD ", "", f"${total_importe_mod}", ""))
+print("{:<35} {:<20} {:<20} {:<12}".format("Pago GIF ", "", f"${total_GIF - depreciacion_GIF_anual}", ""))
+print("{:<35} {:<20} {:<20} {:<12}".format("Pago Gastos Operación ", "", f"${total_GO - depreciacion_GO_anual}", ""))
+print("{:<35} {:<20} {:<20} {:<12}".format("Compra Activo Fijo", "", f"${activo_fijo}", ""))
+print("{:<35} {:<20} {:<20} {:<12}".format("Pago ISR 2022", "", f"${ISR_2022}", ""))
+print("{:<35} {:<20} {:<20} {:<12}".format("Pago ISR 2023", "", f"${ISR}", ""))
+total_salidas=por_proveedores2023 + por_proveedores2022 + total_importe_mod + (total_GIF - depreciacion_GIF_anual) + (total_GO - depreciacion_GO_anual) + activo_fijo + ISR_2022 + ISR 
+print("{:<35} {:<20} {:<20} {:<12}".format("Total de Salidas", "", "", f"${total_salidas:,}"))
+flujo_efectivo_actual=efectivo_disponible-total_salidas
+print("{:<35} {:<20} {:<20} {:<12}".format("Flujo de Efevo. Actual", "", "", f"${flujo_efectivo_actual:,}"))
+print(f'\n')
+############################################### BALANCE GENERAL
+print(f'\nBalance General')
+terrenos= int(input('Ingrese el costo de Terrenos: ')) #550000
+planta_equipo=int(input('Ingrese el costo de Planta y Equipo: ')) #1050000
+depreciacion_acumulada= int(input('Ingrese la depreciación acumulada: ')) #50000
+
+documentos_por_pagar= int(input('Ingrese el costo de los documentos por pagar: ')) #100000
+obligaciones_por_pagar=int(input('Ingrese el costo de las obligaciones por pagar: ')) #150000
+
+capital_aportado= int(input('Ingrese el capital aportado: ')) #1399380
+capital_ganado= int(input('Ingrese el capital ganado: ')) # 80625
+
+print('LABORATORIOS REGIONALES S.A.')
+print('Balance General')
+print('Presupuesto al 31 de diciembre del 2023')
+print("{:<35} {:<20} {:<20} {:<12}".format("ACTIVO", "", "", ""))
+print("{:<35} {:<20} {:<20} {:<12}".format("Circulante", "", "", ""))
+print("{:<35} {:<20} {:<20} {:<12}".format("Efectivo", "", f"${flujo_efectivo_actual:,}", ""))
+print("{:<35} {:<20} {:<20} {:<12}".format("Clientes", "", f"${(total_clientes2023) - ((saldo_clientes2022 + (ventas2023*0.9))):,}", ""))
+print("{:<35} {:<20} {:<20} {:<12}".format("Inventario de Materiales", "", f"${costo_total_inv_final:,}", ""))
+print("{:<35} {:<20} {:<20} {:<12}".format("Inventario Producto Terminado", "", f"${costo_total_inv_final_prodterm:,}", ""))
+total_activos_circulantes=flujo_efectivo_actual+ (total_clientes2023) - ((saldo_clientes2022 + (ventas2023*0.9))) + costo_total_inv_final + costo_total_inv_final_prodterm
+print("{:<35} {:<20} {:<20} {:<12}".format("Total Activos Circulantes: ", "", "", f"${total_activos_circulantes}"))
+print(f'\n')
+print("{:<35} {:<20} {:<20} {:<12}".format("No Circulante", "", "", ""))
+print("{:<35} {:<20} {:<20} {:<12}".format("Terreno", "", f"${terrenos:,}", ""))
+print("{:<35} {:<20} {:<20} {:<12}".format("Planta y Equipo", "", f"${planta_equipo:,}", ""))
+print("{:<35} {:<20} {:<20} {:<12}".format("Depreciación Acumulada", "", f"-${depreciacion_acumulada + depreciacion_GIF_anual+depreciacion_GO_anual:,}", ""))
+total_activos_nocirculantes=terrenos+planta_equipo - (depreciacion_acumulada + depreciacion_GIF_anual+depreciacion_GO_anual)
+print("{:<35} {:<20} {:<20} {:<12}".format("Total Activos No Circulantes: ", "", "", f"${total_activos_nocirculantes:,}"))
+print(f'\n')
+print("{:<35} {:<20} {:<20} {:<12}".format("ACTIVO TOTAL", "", "", f"${total_activos_circulantes+total_activos_nocirculantes:,}"))
+print(f'\n')
+print("{:<35} {:<20} {:<20} {:<12}".format("PASIVO", "", "", ""))
+print("{:<35} {:<20} {:<20} {:<12}".format("Corto Plazo", "", "", ""))
+print("{:<35} {:<20} {:<20} {:<12}".format("Proveedores", "", f"${saldo_proveedores2023:,}", ""))
+print("{:<35} {:<20} {:<20} {:<12}".format("Documentos por Pagar", "", f"${documentos_por_pagar:,}", ""))
+print("{:<35} {:<20} {:<20} {:<12}".format("ISR por Pagar", "", "", ""))
+print("{:<35} {:<20} {:<20} {:<12}".format("PTU por Pagar", "", f"${PTU}", ""))
+total_pasivos_cortoplazo= saldo_proveedores2023 + documentos_por_pagar + PTU
+print("{:<35} {:<20} {:<20} {:<12}".format("Total Pasivo Corto Plazo: ", "", "", f"${total_pasivos_cortoplazo:,}"))
+print(f'\n')
+print("{:<35} {:<20} {:<20} {:<12}".format("Largo Plazo", "", "", ""))
+print("{:<35} {:<20} {:<20} {:<12}".format("Obligaciones por pagar", "", f"${obligaciones_por_pagar:,}", ""))
+total_pasivos_largoplazo=obligaciones_por_pagar
+print("{:<35} {:<20} {:<20} {:<12}".format("Total Pasivo Largo Plazo: ", "", "", f"${total_pasivos_largoplazo:,}"))
+print(f'\n')
+print("{:<35} {:<20} {:<20} {:<12}".format("PASIVO TOTAL", "", "", f"{total_pasivos_cortoplazo+total_pasivos_largoplazo:,}"))
+print(f'\n')
+print("{:<35} {:<20} {:<20} {:<12}".format("CAPITAL CONTABLE", "", "", ""))
+print("{:<35} {:<20} {:<20} {:<12}".format("Capital Aportado", "", f"${capital_aportado:,}", ""))
+print("{:<35} {:<20} {:<20} {:<12}".format("Capital Ganado", "", f"${capital_ganado:,}", ""))
+print("{:<35} {:<20} {:<20} {:<12}".format("Utilidad del Ejercicio", "", f"${utilidad_neta:,}", ""))
+total_capital_contable=capital_aportado + capital_ganado + utilidad_neta
+print("{:<35} {:<20} {:<20} {:<12}".format("Total Capital Contable: ", "", "", f"${total_capital_contable:,}"))
+print(f'\n')
+print("{:<35} {:<20} {:<20} {:<12}".format("SUMA PASIVO Y CAPITAL", "", "", f"${total_capital_contable + total_pasivos_cortoplazo + total_pasivos_largoplazo:,}"))
+
+
+
+
+
+
+
+
+
